@@ -139,6 +139,9 @@ namespace book {
         // 从指定路径读入
         void write(std::string_view path) const;
 
+        void read(std::ifstream &in);
+        void write(std::ofstream &out) const;
+
         /*
          * 用标签名获取书ID
          * 如果标签存在，则返回对应标签ID

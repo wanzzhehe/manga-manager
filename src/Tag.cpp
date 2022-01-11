@@ -102,19 +102,27 @@ void TagManager::read(std::string_view path) {
     constexpr auto readMethod = std::ios::in | std::ios::binary;
 
     clear();
-    auto fin = std::ifstream(path.begin(), readMethod);
-    m_readInfo(fin, m_bookTags);
-    m_readInfo(fin, m_groupTags);
+    std::ifstream fin(path.begin(), readMethod);
+    read(fin);
     fin.close();
 }
 
 void TagManager::write(std::string_view path) const {
     constexpr auto writeMethod = std::ios::out | std::ios::binary;
 
-    auto fout = std::ofstream(path.begin(), writeMethod);
-    m_writeInfo(fout, m_bookTags);
-    m_writeInfo(fout, m_groupTags);
+    std::ofstream fout(path.begin(), writeMethod);
+    write(fout);
     fout.close();
+}
+
+void TagManager::read(std::ifstream &in) {
+    m_readInfo(in, m_bookTags);
+    m_readInfo(in, m_groupTags);
+}
+
+void TagManager::write(std::ofstream &out) const {
+    m_writeInfo(out, m_bookTags);
+    m_writeInfo(out, m_groupTags);
 }
 
 TagIdType TagManager::getBookTagId(std::string_view name) const {
