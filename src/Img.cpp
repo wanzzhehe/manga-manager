@@ -100,12 +100,18 @@ bool ImagesManager::write(std::ofstream &out) const {
 #ifdef _WIN32
             std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
             ret = converter.to_bytes(tmp);
-        } else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
+#endif
+        }
+        else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
             // FIXIT TOMORROW
+            // FIXED
+#ifdef __linux
             ret = tmp;
-        } else return false;
+#endif
+        }
+        else return false;
         length = ret.length();
-        out.write(reinterpret_cast<const char *>(&length), sizeof(length));
+        out.write(reinterpret_cast<const char*>(&length), sizeof(length));
         out.write(ret.c_str(), ret.size());
     }
     return true;
