@@ -145,12 +145,12 @@ const GroupTag &TagManager::getGroupTag(TagIdType id) const {
     return m_getTag(id, m_groupTags);
 }
 
-bool TagManager::checkIfValidBookTagId(TagIdType id) const {
-    return m_checkIfValidId(id, m_bookTags);
+bool TagManager::checkTagId(TagIdType id) const {
+    return m_checkId(id, m_bookTags);
 }
 
-bool TagManager::checkIfValidGroupTagId(TagIdType id) const {
-    return m_checkIfValidId(id, m_groupTags);
+bool TagManager::checkGroupTagId(TagIdType id) const {
+    return m_checkId(id, m_groupTags);
 }
 
 TagIdType TagManager::createBookTag(std::string_view name, TagIdType groupId) {
@@ -223,7 +223,7 @@ void TagManager::m_clearTagsInfo(TagsInfo<TagType> &info) {
 }
 
 template<isTagType TagType>
-bool TagManager::m_checkIfValidId(TagIdType id, const TagsInfo<TagType> &info) const {
+bool TagManager::m_checkId(TagIdType id, const TagsInfo<TagType> &info) const {
     return !(id == nullTagId || id > info.m_curMaxTag || info.m_Tags[id].m_id == nullTagId);
 }
 
@@ -237,7 +237,7 @@ TagIdType TagManager::m_getTagId(std::string_view name, const TagsInfo<TagType> 
 
 template<isTagType TagType>
 const TagType &TagManager::m_getTag(TagIdType id, const TagsInfo<TagType> &info) const {
-    if (m_checkIfValidId(id, info)) return info.m_Tags.at(id);
+    if (m_checkId(id, info)) return info.m_Tags.at(id);
     else return info.m_Tags.at(nullTagId);
 }
 
@@ -294,7 +294,7 @@ TagIdType TagManager::m_getNewId(TagsInfo<TagType> &info) {
 
 template<isTagType TagType>
 bool TagManager::m_eraseTag(TagIdType id, TagsInfo<TagType> &info) {
-    if (!m_checkIfValidId(id, info)) return false;
+    if (!m_checkId(id, info)) return false;
     --info.m_curSumOfTags;
     auto &tag = info.m_Tags[id];
     info.m_erasedTags.emplace(tag.getId());

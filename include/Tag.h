@@ -173,12 +173,12 @@ namespace book {
          * 检查书标签ID是否有效
          * 有效返回 true，无效返回 false
          */
-        bool checkIfValidBookTagId(TagIdType id) const;
+        bool checkTagId(TagIdType id) const;
         /*
          * 检查组标签ID是否有效
          * 有效返回 true，无效返回 false
          */
-        bool checkIfValidGroupTagId(TagIdType id) const;
+        bool checkGroupTagId(TagIdType id) const;
         /*
          * 创建一个新的书标签
          * 返回新创建标签的ID
@@ -230,7 +230,7 @@ namespace book {
         void m_clearTagsInfo(TagsInfo<TagType> &info);
         /* 检查 id 再 info 内是否有效 */
         template<isTagType TagType>
-        bool m_checkIfValidId(TagIdType id, const TagsInfo<TagType> &info) const;
+        bool m_checkId(TagIdType id, const TagsInfo<TagType> &info) const;
         /* 通过 name 获取 info 内标签ID */
         template<isTagType TagType>
         TagIdType m_getTagId(std::string_view name, const TagsInfo<TagType> &info) const;
