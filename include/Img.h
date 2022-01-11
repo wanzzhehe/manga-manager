@@ -13,7 +13,7 @@ namespace book {
 
     class ImagesManager;
 
-    class ImagesManager final {
+    class ImagesManager {
     public:
         // 默认构造函数
         ImagesManager() = default;
