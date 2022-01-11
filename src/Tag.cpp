@@ -40,6 +40,10 @@ TagIdType Tag::getId() const {
 std::string_view Tag::getName() const {
     return m_name;
 }
+
+bool Tag::isNull() const {
+    return m_id == nullTagId;
+}
 /* ====== END ====== */
 
 /* class BookTag */

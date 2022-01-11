@@ -61,6 +61,8 @@ namespace book {
         TagIdType getId() const;
         // 获取标签名
         std::string_view getName() const;
+        // 判断是否为空标签
+        bool isNull() const;
     };
 
     /* class BookTag */
