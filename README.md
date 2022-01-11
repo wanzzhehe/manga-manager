@@ -1,4 +1,4 @@
-# MangaManager 开发计划书
+# MangaManager 开发计划书（极早期开发中）
 
 ## 简介
 
