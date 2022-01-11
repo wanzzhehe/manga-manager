@@ -21,7 +21,12 @@ ImagesManager::ImagesManager(std::vector<fs::path> &&images)
 
 void ImagesManager::copy(const fs::path &destPath, bool moveOldPath) {
     fs::create_directories(destPath);
-    m_copy(destPath, moveOldPath);
+    for (auto &path : m_images) {
+        fs::path destFilePath = destPath / path.filename();
+        fs::copy_file(path, destFilePath);
+        if (moveOldPath) path = std::move(destFilePath);
+    }
+    // m_copy(destPath, moveOldPath);
 }
 
 void ImagesManager::move(const fs::path &destPath) {
