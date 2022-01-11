@@ -63,6 +63,8 @@ namespace book {
         bool write(std::ofstream &out) const;
         // 从 file 内入读类
         bool read(std::ifstream &file);
+        // 获取管理器管理的图像数量
+        std::size_t getSumOfImages() const;
 
     private:
         void m_copy(const fs::path &destPath, bool moveOldPath);

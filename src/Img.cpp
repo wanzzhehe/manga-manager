@@ -139,6 +139,10 @@ bool ImagesManager::read(std::ifstream& in) {
     return true;
 }
 
+std::size_t ImagesManager::getSumOfImages() const {
+    return m_images.size();
+}
+
 // 私有函数
 
 /* ====== END ====== */
