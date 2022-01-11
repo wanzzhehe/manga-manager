@@ -4,6 +4,7 @@
 
 namespace book {
     using BookIdType = std::uint32_t;
+    constexpr BookIdType nullBookId = 0U;
 
     class Book : public ImagesManager {
     public:
