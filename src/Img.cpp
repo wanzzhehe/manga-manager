@@ -147,7 +147,7 @@ bool ImagesManager::read(std::ifstream& in) {
 #endif
         } else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
 #ifdef __linux
-            m_images.emplace_back(tmp);
+            m_images.emplace_back(std::move(tmp));
 #endif
         } else return false;
     }
