@@ -31,7 +31,17 @@ void ImagesManager::copy(const fs::path &destPath, bool moveOldPath) {
 
 void ImagesManager::move(const fs::path &destPath) {
     fs::create_directories(destPath);
-    m_move(destPath);
+    for (auto &path : m_images) {
+        fs::path destFilePath = destPath / path.filename();
+        std::error_code ec;
+        // 防止跨文件系统移动失败
+        fs::rename(path, destPath, ec);
+        if (ec) {
+            fs::copy_file(path, destPath);
+            fs::remove(path);
+        }
+        path = std::move(destPath);
+    }
 }
 
 void ImagesManager::clear(bool removeFiles) {
