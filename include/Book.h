@@ -10,7 +10,8 @@ namespace book {
         // 默认构造函数
         Book() = default;
         // 将 bookPath 目录下所有图像文件加入管理器，tagManager 为标签管理器指针
-        Book(const fs::path &bookPath, TagManager *tagManager, BookIdType id);
+        Book(const fs::path &bookPath, TagManager *tagManager, BookIdType id,
+            const TagIdList &tags);
         // 将 srcPath 目录下所有图像文件添加到 destPath 目录下并加入管理器
         // tagManager 为标签管理器指针
         // 如果 removeOldFile 为 false，那么不删除 srcPath 目录下的图像文件，即对源文件进行复制
