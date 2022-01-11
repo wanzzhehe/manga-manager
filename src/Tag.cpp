@@ -137,6 +137,10 @@ TagIdType TagManager::getGroupTagId(std::string_view name) const {
     return m_getTagId(name, m_groupTags);
 }
 
+TagIdType TagManager::getGroupTagId(TagIdType bookTagId) const {
+    return getBookTag(bookTagId).getGroupId();
+}
+
 const BookTag &TagManager::getBookTag(TagIdType id) const {
     return m_getTag(id, m_bookTags);
 }

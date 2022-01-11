@@ -157,6 +157,10 @@ namespace book {
          * 否则返回空标签ID，即 nullTagId
          */
         TagIdType getGroupTagId(std::string_view name) const;
+        // 获取 bookTagId 所属的 groupTagId
+        // 如果 bookTagId 存在，则返回对应的标签ID
+        // 如果 bookTagId 不存在，则返回 nullTagId
+        TagIdType getGroupTagId(TagIdType bookTagId) const;
         /*
          * 用书标签ID获取书标签
          * 如果标签ID合法，则返回标签的常量引用
