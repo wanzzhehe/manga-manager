@@ -101,15 +101,13 @@ bool ImagesManager::write(std::ofstream &out) const {
             std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
             ret = converter.to_bytes(tmp);
 #endif
-        }
-        else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
+        } else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
             // FIXIT TOMORROW
             // FIXED
 #ifdef __linux
             ret = tmp;
 #endif
-        }
-        else return false;
+        } else return false;
         length = ret.length();
         out.write(reinterpret_cast<const char*>(&length), sizeof(length));
         out.write(ret.c_str(), ret.size());
@@ -117,15 +115,25 @@ bool ImagesManager::write(std::ofstream &out) const {
     return true;
 }
 
-bool ImagesManager::read(std::ifstream &in) {
+bool ImagesManager::read(std::ifstream& in) {
     std::size_t size, length;
     std::string tmp;
-    in.read(reinterpret_cast<char *>(&size), sizeof(size));
+    in.read(reinterpret_cast<char*>(&size), sizeof(size));
     for (std::size_t i = 0; i < size; ++i) {
-        in.read(reinterpret_cast<char *>(&length), sizeof(length));
-        if constexpr (std::is_same_v<fs::path::string_type, std::wstring>) {
-        } else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
 
+        in.read(reinterpret_cast<char*>(&length), sizeof(length));
+        tmp.resize(length);
+        in.read(reinterpret_cast<char*>(&tmp[0]), length);
+
+        if constexpr (std::is_same_v<fs::path::string_type, std::wstring>) {
+#ifdef _WIN32
+            std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+            m_images.emplace_back(converter.from_bytes(tmp));
+#endif
+        } else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
+#ifdef __linux
+            m_images.emplace_back(tmp);
+#endif
         } else return false;
     }
     return true;
