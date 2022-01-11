@@ -190,19 +190,27 @@ std::size_t TagManager::getSumOfGroupTags() const {
 std::size_t TagManager::getSumOfTagsFromGroup(TagIdType groupId) const {
     std::size_t ret = 0U;
     for (const auto &tag : m_bookTags.m_Tags) {
-        if (tag.getId() == nullTagId) continue;
+        if (tag.isNull()) continue;
         if (tag.getGroupId() == groupId) ++ret;
     }
     return ret;
 }
 
-std::unique_ptr<TagIdList> TagManager::getBookTagsFromGroup(TagIdType groupId) const {
+std::unique_ptr<TagIdList> TagManager::getBookTags(TagIdType groupId) const {
     std::unique_ptr<TagIdList> ret(new std::vector<TagIdType>());
     for (const auto &tag : m_bookTags.m_Tags) {
-        if (tag.getId() == nullTagId) continue;
+        if (tag.isNull()) continue;
         if (tag.getGroupId() == groupId) ret->emplace_back(tag.getId());
     }
     return ret;
+}
+
+std::unique_ptr<TagIdList> TagManager::getBookTags() const {
+    return m_getTags(m_bookTags);
+}
+
+std::unique_ptr<TagIdList> TagManager::getGroupTags() const {
+    return m_getTags(m_groupTags);
 }
 
 // 私有方法
@@ -297,5 +305,15 @@ bool TagManager::m_eraseTag(TagIdType id, TagsInfo<TagType> &info) {
 template<isTagType TagType>
 std::size_t TagManager::m_getSumOfTags(const TagsInfo<TagType> &info) const {
     return info.m_curMaxTag - info.m_erasedTags.size();
+}
+
+template<isTagType TagType>
+std::unique_ptr<TagIdList> TagManager::m_getTags(const TagsInfo<TagType> &info) const {
+    std::unique_ptr<TagIdList> ret(new TagIdList());
+    for (auto &tag : info.m_Tags) {
+        if (tag.isNull()) continue;
+        ret->emplace_back(tag.getId());
+    }
+    return ret;
 }
 /* ====== END ====== */

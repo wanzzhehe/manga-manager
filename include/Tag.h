@@ -118,13 +118,14 @@ namespace book {
         template<isTagType TagType>
         struct TagsInfo {
         public:
+            using TagList = std::vector<TagType>;
             // 构造函数
             TagsInfo();
 
         public:
             std::size_t m_curSumOfTags;         // 当前共有多少标签
             TagIdType m_curMaxTag;              // 当前最大标签ID
-            std::vector<TagType> m_Tags;        // 标签列表，保证合法标签ID与此动态数组下标一致
+            TagList m_Tags;        // 标签列表，保证合法标签ID与此动态数组下标一致
             TagIdHeap m_erasedTags;             // 被删除的标签ID
         };
 
@@ -217,7 +218,11 @@ namespace book {
         /*
          * 获取某个标签组下的所有书标签
          */
-        std::unique_ptr<TagIdList> getBookTagsFromGroup(TagIdType groupId) const;
+        std::unique_ptr<TagIdList> getBookTags(TagIdType groupId) const;
+        // 获取所有书标签 ID
+        std::unique_ptr<TagIdList> getBookTags() const;
+        // 获取所有组标签 ID
+        std::unique_ptr<TagIdList> getGroupTags() const;
 
     private:
         /* 通用清空 Info */
@@ -250,5 +255,8 @@ namespace book {
         /* 获取 info 中标签个数 */
         template<isTagType TagType>
         std::size_t m_getSumOfTags(const TagsInfo<TagType> &info) const;
+        // 获取所有标签ID
+        template<isTagType TagType>
+        std::unique_ptr<TagIdList> m_getTags(const TagsInfo<TagType> &info) const;
     };
 }
