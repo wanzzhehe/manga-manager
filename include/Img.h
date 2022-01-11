@@ -67,8 +67,6 @@ namespace book {
         std::size_t getSumOfImages() const;
 
     private:
-        void m_copy(const fs::path &destPath, bool moveOldPath);
-        void m_move(const fs::path &destPath);
         bool m_checkIndex(std::size_t i) const;
     };
 }
