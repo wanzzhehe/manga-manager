@@ -96,6 +96,8 @@ bool ImagesManager::write(std::ofstream &out) const {
         auto &tmp = path.native();
         std::string ret;
         if constexpr (std::is_same_v<fs::path::string_type, std::wstring>) {
+            // 被迫用宏再包裹一层 _^_
+#ifdef _WIN32
             std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
             ret = converter.to_bytes(tmp);
         } else if constexpr (std::is_same_v<fs::path::string_type, std::string>) {
