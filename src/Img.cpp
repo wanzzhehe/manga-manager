@@ -158,6 +158,10 @@ std::size_t ImagesManager::getSumOfImages() const {
     return m_images.size();
 }
 
+bool ImagesManager::m_checkIndex(std::size_t i) const {
+    return i < m_images.size();
+}
+
 // 私有函数
 
 /* ====== END ====== */
