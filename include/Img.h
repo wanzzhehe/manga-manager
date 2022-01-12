@@ -1,3 +1,6 @@
+#ifndef IMG_H
+#define IMG_H
+
 #include <array>
 #include <vector>
 #include <filesystem>
@@ -70,3 +73,5 @@ namespace book {
         bool m_checkIndex(std::size_t i) const;
     };
 }
+
+#endif

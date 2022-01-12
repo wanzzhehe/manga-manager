@@ -1,3 +1,6 @@
+#ifndef BOOK_H
+#define BOOK_H
+
 #include <cstdint>
 #include "Tag.h"
 #include "Img.h"
@@ -60,3 +63,5 @@ namespace book {
         bool write(std::ofstream &out) const;
     };
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef TAG_H
+#define TAG_H
+
 #include <cstdint>
 #include <limits>
 #include <string>
@@ -264,3 +267,5 @@ namespace book {
         std::unique_ptr<TagIdList> m_getTags(const TagsInfo<TagType> &info) const;
     };
 }
+
+#endif
