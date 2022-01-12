@@ -100,4 +100,23 @@ std::size_t Book::getSumOfTags(TagIdType groupId) const {
     }
     return cnt;
 }
+
+bool Book::read(std::ifstream &in, TagManager *tagManager) {
+    m_tagManager = tagManager;
+    if (!ImagesManager::read(in)) return false;
+    in.read(reinterpret_cast<char *>(&m_bookId), sizeof(m_bookId));
+    std::size_t size;
+    in.read(reinterpret_cast<char *>(&size), sizeof(size));
+    m_tags.resize(size);
+    in.read(reinterpret_cast<char *>(&m_tags[0]), m_tags.size() * sizeof(decltype(m_tags)::value_type));
+    return true;
+}
+
+bool Book::write(std::ofstream &out) const {
+    if (!ImagesManager::write(out)) return false;
+    out.write(reinterpret_cast<const char *>(&m_bookId), sizeof(m_bookId));
+    std::size_t size = m_tags.size();
+    out.write(reinterpret_cast<const char *>(&size), sizeof(size));
+    out.write(reinterpret_cast<const char *>(&m_tags[0]), m_tags.size() * sizeof(decltype(m_tags)::value_type));
+}
 /* ====== END ====== */
