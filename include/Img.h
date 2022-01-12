@@ -59,10 +59,10 @@ namespace book {
         // 清空管理器，扫描 srcPath 目录下的图像文件并添加到管理器内
         void scanImageFiles(const fs::path &srcPath, bool add = false);
 
-        // 向 file 内写入类
+        // 向 out 内写入类
         bool write(std::ofstream &out) const;
-        // 从 file 内入读类
-        bool read(std::ifstream &file);
+        // 从 in 内读入类
+        bool read(std::ifstream &in);
         // 获取管理器管理的图像数量
         std::size_t getSumOfImages() const;
 
